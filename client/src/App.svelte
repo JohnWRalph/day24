@@ -1,6 +1,7 @@
 <script lang="ts">
     import UserForm from "./components/UserForm.svelte";
-    import UserList from "./components/UserList.svelte";
+    import VideogameList from "./components/VideogameList.svelte";
+  
 
     //toggles to display either the input form or the list of games
     let displayForm: boolean = true;
@@ -17,7 +18,7 @@
     {#if displayForm}
         <UserForm />
     {:else}
-        <UserList />
+        <VideogameList />
     {/if}
 </main>
 
