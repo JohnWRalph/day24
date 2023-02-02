@@ -1,6 +1,5 @@
 <script lang="ts">
     import axios from "axios";
-    let avatar, fileinput;
 
     // image uploader
     const onFileSelected = (e) => {
@@ -9,8 +8,6 @@
         reader.readAsDataURL(image);
         reader.onload = (e) => {
             avatar = e.target.result;
-            console.log(avatar)
-            
         };
     };
 
@@ -21,7 +18,9 @@
     let genre: string = "";
     let esrb: string = "";
     let isGood: boolean = false;
-    let imageURL: File;
+    let image: File;
+    let errorMessage: string;
+    let avatar, fileinput;
 
     //submit form button function
     async function submitForm() {
@@ -32,17 +31,61 @@
             genre: genre,
             esrb: esrb,
             isGood: isGood,
-            imageURL: avatar,
+            image: avatar,
         });
-        console.log(result);
+        errorMessage = result.data.error;
+        console.log("Error Message:", errorMessage);
     }
 </script>
 
-<input bind:value={name} type="text" placeholder="Name" />
-<input bind:value={platform} type="text" placeholder="Platform" />
-<input bind:value={releaseYear} type="number" placeholder="ReleaseYear" />
-<input bind:value={genre} type="text" placeholder="Genre" />
-<input bind:value={esrb} type="text" placeholder="ESRB Rating" />
+<!-- display error message if wrong input was made  -->
+<!-- svelte-ignore empty-block -->
+{#if errorMessage}
+    <h1>{errorMessage}</h1>
+{:else}{/if}
+
+<!-- Input form -->
+Title: <input bind:value={name} type="text" placeholder="Title" /><br />
+
+Platform(s):
+<label
+    ><input type="checkbox" bind:group={platform} value={"Xbox"} /> Xbox</label
+>
+<label
+    ><input type="checkbox" bind:group={platform} value={"Playstation"} /> Playstation</label
+>
+<label
+    ><input type="checkbox" bind:group={platform} value={"Switch"} /> Switch</label
+>
+<label><input type="checkbox" bind:group={platform} value={"PC"} /> PC</label>
+<label
+    ><input type="checkbox" bind:group={platform} value={"Other"} /> Other</label
+><br />
+Release Year:
+<input bind:value={releaseYear} type="number" placeholder="ReleaseYear" /><br />
+Genre(s):
+<label
+    ><input type="checkbox" bind:group={genre} value={"Action"} /> Action</label
+>
+<label
+    ><input type="checkbox" bind:group={genre} value={"Adventure"} /> Adventure</label
+>
+<label><input type="checkbox" bind:group={genre} value={"FPS"} /> FPS</label>
+<label><input type="checkbox" bind:group={genre} value={"Other"} /> Other</label
+><br />
+<!-- <input bind:value={genre} type="text" placeholder="Genre" /> -->
+
+ESRB Rating:
+<label>
+    <input type="radio" bind:group={esrb} name="E" value={"E: Everyone"} />
+    E: Everyone
+</label>
+<label>
+    <input type="radio" bind:group={esrb} name="M" value={"M: Mature"} />
+    M: Mature
+</label>
+
+<br />
 Is Good?:<input bind:checked={isGood} type="checkbox" />
 <div class="imageUploadContainer">
     <h1>Upload Image:</h1>
@@ -57,6 +100,7 @@ Is Good?:<input bind:checked={isGood} type="checkbox" />
         />
     {/if}
 
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
     <img
         class="upload"
         src="https://static.thenounproject.com/png/625182-200.png"
@@ -65,14 +109,13 @@ Is Good?:<input bind:checked={isGood} type="checkbox" />
             fileinput.click();
         }}
     />
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div
         class="chan"
         on:click={() => {
             fileinput.click();
         }}
-    >
-      
-    </div>
+    />
     <input
         style="display:none"
         type="file"
@@ -82,13 +125,12 @@ Is Good?:<input bind:checked={isGood} type="checkbox" />
     />
 </div>
 
-<button on:click={async () => await submitForm()}> submit</button>
+<button on:click={async () => await submitForm()}> Submit</button>
 
 <style>
-    .imageUploadContainer{
-        display:flex;
+    .imageUploadContainer {
+        display: flex;
         align-items: center;
-        
     }
     .upload {
         /* background-color: aqua; */

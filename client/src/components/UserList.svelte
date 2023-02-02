@@ -14,7 +14,6 @@
     });
 </script>
 
-
 <div class="gameCollection">
     {#each videogames as videogame}
         <div class="gameContainer">
@@ -30,7 +29,11 @@
             <br />
             Good: {videogame.isGood}
             <br />
-            <img src={videogame.imageURL} alt="pandas" />
+            {#if videogame.image}
+                <img src={videogame.image} alt="pandas" />
+            {:else}
+            "No image"
+            {/if}
         </div>
     {/each}
 </div>

@@ -13,3 +13,15 @@ Your form should have:
 
 BONUS:
 Add an IMAGE FILE UPLOADER to the Form, and save it in the backend as well! ( ask for help if you need ) 
+
+Day25:
+VALIDATION!
+Watch the video, then do the same thing for your Videogames app from Day24.
+Validate input, return errors on the backend.
+Catch them on the frontend and make your form user friendly!
+
+Defien your own validation rules.
+Some examples:
+- is your input type the type you expect it to be? ie: can i pass an array instead of a string as .req.body.name and pass your validation, breaking shit?
+- length checks
+- bad word filters (edited)

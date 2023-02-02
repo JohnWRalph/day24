@@ -5,6 +5,6 @@ releaseYear:number;
 genre:string;
 esrb:string;
 isGood:boolean;
-imageURL: File;
+image: File;
 }
 
